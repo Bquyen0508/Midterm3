@@ -1,8 +1,8 @@
 import "./App.css";
 import Navbar from "./components/layouts/Navbar";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Users from "./components/users/Users"
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+// import Users from "./components/users/Users"
 import Search from "./components/users/Search";
 const App = () => {
   return (
