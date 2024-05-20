@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-success">
       <h1>
-        <i className="fab fa-github" /> 
+        <i className="fab fa-github" /> GitHub Finder
       </h1>
       <ul>
         <li>
