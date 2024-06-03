@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const GetUser = async (username) => {
+const getUser = async (username) => {
   try {
     const response = await axios.get(
       `https://api.github.com/users/${username}`
@@ -12,7 +12,7 @@ const GetUser = async (username) => {
   }
 };
 
- const SearchUsers = async (text) => {
+ const searchUsers = async (text) => {
    try {
      const response = await axios.get(
        `https://api.github.com/search/users?q=${text} `
@@ -24,7 +24,7 @@ const GetUser = async (username) => {
  };
     
 
-  const GetUserRepos = async (username) => {
+  const getUserRepos = async (username) => {
     try {
       const response = await axios.get(
         `https://api.github.com/users/${username}/repos`
@@ -37,4 +37,4 @@ const GetUser = async (username) => {
     }
 };
   
-export { GetUser, SearchUsers, GetUserRepos };
+export { getUser, searchUsers, getUserRepos };

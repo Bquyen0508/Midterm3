@@ -1,33 +1,38 @@
 // Search.js
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Users from "./Users";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { searchUsers } from "../../api";
 const Search = () => {
   const [text, setText] = useState("");
   const [users, setUsers] = useState([]);
-    
-  const searchUsers = async (text) => {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/search/users?q=${text} `
-      );
-      setUsers(response.data.items);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-    
+
+const history = useHistory();
+const location = useLocation();
+
+useEffect(() => {
+  const query = new URLSearchParams(location.search).get("q");
+  if (query) {
+    setText(query);
+    const fetchUser = async () => {
+      const userData = await searchUsers(query);
+      setUsers(userData);
+    };
+    fetchUser();
+  }
+}, [location.search]);
+
   const clearUsers = () => {
     setUsers([]);
   };
-    
-  const onSubmit = (e) => {
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (text === "") {
       alert("Please enter something");
     } else {
-      searchUsers(text);
-      setText("");
+      history.push(`?q=${text}`);
     }
   };
   const onChange = (e) => setText(e.target.value);

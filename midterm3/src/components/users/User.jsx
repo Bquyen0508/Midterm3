@@ -1,17 +1,19 @@
 // User.js
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Repos from "../repos/Repos";
-import { GetUser, GetUserRepos } from "../../api";
+import { getUser, getUserRepos } from "../../api";
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
 
+  const history = useHistory();
+
    useEffect(() => {
     const fetchUser = async () => {
-      const userData = await GetUser(id);
+      const userData = await getUser(id);
       setUser(userData);
     };
     fetchUser();
@@ -19,15 +21,15 @@ const User = () => {
   
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await GetUserRepos(id);
+      const userData = await getUserRepos(id);
       setRepos(userData);
     };
     fetchUser();
   }, [id]);
 
   useEffect(() => {
-    GetUser(id);
-    GetUserRepos(id);
+    getUser(id);
+    getUserRepos(id);
   }, []);
   const {
     name,
@@ -46,9 +48,9 @@ const User = () => {
   } = user;
   return (
     <Fragment>
-      <Link to="/" className="btn btn-light">
+      <button onClick={() => history.goBack()} className="btn btn-light">
         Back to Search
-      </Link>
+      </button>
       Hireable:{" "}
       {hireable ? (
         <i className="fas fa-check text-success" />
@@ -72,8 +74,7 @@ const User = () => {
               <h3>Bio:</h3>
               <p>{bio}</p>
             </Fragment>
-                  )}
-                  
+          )}
 
           <a
             href={html_url}
