@@ -1,15 +1,16 @@
 // User.js
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Repos from "../repos/Repos";
 import { getUser, getUserRepos } from "../../api";
+import { ThemeMode } from "../../ThemeMode";
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
-
   const history = useHistory();
+  const { darkMode } = useContext(ThemeMode);
 
    useEffect(() => {
     const fetchUser = async () => {
@@ -119,7 +120,9 @@ const User = () => {
         <div className="badge badge-primary">Followers: {followers}</div>
         <div className="badge badge-success">Following: {following}</div>
         <div className="badge badge-light">Repository: {public_repos}</div>
-        <div className="badge badge-dark">Gist: {public_gists}</div>
+        <div className={`btn my-1 ${darkMode ? "" : "btn-dark"}`}>
+          Gist: {public_gists}
+        </div>
       </div>
       <h2>User's Repos</h2>
       <Repos repos={repos} />
